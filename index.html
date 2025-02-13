@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installer Invoice</title>
+    <style>
+        body {
+            font-family:'Courier New', Courier, monospace;
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background-color: #f4ecd8;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #6b4845;
+            border-bottom: 3px solid #6b4845;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .header-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #4d4d4d;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input {
+            padding: 0.8rem;
+            border: 2px solid #d3d3d3;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #d48156;
+            box-shadow: 0 0 0 3px rgba(212, 129, 86, 0.1);
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .items-table th {
+            background: #d48156;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .items-table td {
+            padding: 1rem;
+            border-top: 1px solid #ecf0f1;
+            background-color: #fff;
+        }
+
+        .items-table input {
+            margin: 0;
+            padding: 0.5rem;
+        }
+
+        .subtotal {
+            white-space: nowrap;
+            font-weight: 600;
+            color: #6b4845;
+            text-align: right;
+            padding-right: 1rem;
+        }
+
+        .action-buttons {
+            text-align: center;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #e74c3c;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            width: auto !important;
+            transition: transform 0.2s ease;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
+        .summary-section {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6b4845;
+            align-items: center;
+        }
+
+        button {
+            background-color: #d48156;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c16e45;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+
+        .submit-button {
+            background-color: #6b4845;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+                margin: 0.5rem;
+            }
+
+            .header-info {
+                grid-template-columns: 1fr;
+            }
+
+            .items-table {
+                display: block;
+                margin: 1rem 0;
+            }
+
+            .items-table thead {
+                display: none;
+            }
+
+            .items-table tbody {
+                display: block;
+            }
+
+            .items-table tr {
+                display: block;
+                margin-bottom: 1.5rem;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                padding: 1rem;
+            }
+
+            .items-table td {
+                display: block;
+                padding: 0.5rem 0;
+                border: none;
+            }
+
+            .items-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #34495e;
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            .subtotal {
+                display: block;
+                text-align: right;
+                padding: 0.5rem 0;
+                font-weight: 600;
+            }
+
+            .action-buttons {
+                text-align: right;
+                border-top: 1px solid #ecf0f1;
+                margin-top: 0.5rem;
+                padding-top: 0.5rem;
+            }
+
+            .action-button {
+                padding: 0.8rem;
+            }
+
+            input {
+                font-size: 16px;
+                padding: 0.8rem;
+            }
+
+            button {
+                width: 100%;
+                margin: 0.5rem 0;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-row {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Installer Invoice</h1>
+    
+    <div class="header-info">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" id="customerName" required>
+        </div>
+        <div class="form-group">
+            <label>Job Site:</label>
+            <input type="text" id="jobSite" required>
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            <input type="date" id="invoiceDate" required>
+        </div>
+    </div>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>Items</th>
+                <th>QTY (SF/FR/UNIT)</th>
+                <th>Rate (RM)</th>
+                <th>Subtotal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <tr class="item-row">
+                <td data-label="Items">
+                    <input type="text" class="itemName" required placeholder="Item name/Lump Sum">
+                </td>
+                <td data-label="QTY">
+                    <input type="number" class="itemQty" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                </td>
+                <td data-label="Rate (RM)">
+                    <input type="number" class="itemRate" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                </td>
+                <td data-label="Subtotal" class="subtotal">RM 0.00</td>
+                <td data-label="Actions" class="action-buttons">
+                    <button class="action-button delete" onclick="removeItem(this)">🗑️</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="addNewItem()">Add Another Item</button>
+
+    <div class="summary-section">
+        <div class="summary-row">
+            <span>Total</span>
+            <span id="finalTotal">RM 0.00</span>
+        </div>
+        <button class="submit-button" onclick="submitToMake()">Submit Invoice</button>
+    </div>
+
+    <script>
+        function addNewItem() {
+            const tbody = document.getElementById('itemsTableBody');
+            const newRow = document.createElement('tr');
+            newRow.className = 'item-row';
+            newRow.innerHTML = `
+                <td data-label="Items">
+                    <input type="text" class="itemName" required placeholder="item name/Lump Sum">
+                </td>
+                <td data-label="QTY">
+                    <input type="number" class="itemQty" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                </td>
+                <td data-label="Rate (RM)">
+                    <input type="number" class="itemRate" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                </td>
+                <td data-label="Subtotal" class="subtotal">RM 0.00</td>
+                <td data-label="Actions" class="action-buttons">
+                    <button class="action-button delete" onclick="removeItem(this)">🗑️</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            newRow.querySelector('.itemName').focus();
+        }
+
+        function removeItem(button) {
+            button.closest('tr').remove();
+            calculateTotal();
+        }
+
+        function calculateSubtotal(input) {
+            const row = input.closest('tr');
+            const qty = parseFloat(row.querySelector('.itemQty').value) || 0;
+            const rate = parseFloat(row.querySelector('.itemRate').value) || 0;
+            const subtotal = qty * rate;
+            row.querySelector('.subtotal').textContent = `RM ${subtotal.toFixed(2)}`;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const subtotals = Array.from(document.getElementsByClassName('subtotal'))
+                .map(el => parseFloat(el.textContent.replace('RM ', '')) || 0);
+            const total = subtotals.reduce((a, b) => a + b, 0);
+            document.getElementById('finalTotal').textContent = `RM ${total.toFixed(2)}`;
+        }
+
+        function validateForm() {
+            const customerName = document.getElementById('customerName').value.trim();
+            const jobSite = document.getElementById('jobSite').value.trim();
+            const date = document.getElementById('invoiceDate').value;
+            
+            if (!customerName || !jobSite || !date) {
+                alert('Please enter name, job site and date');
+                return false;
+            }
+
+            const items = document.getElementsByClassName('item-row');
+            let isValid = true;
+
+            Array.from(items).forEach(item => {
+                const name = item.querySelector('.itemName').value.trim();
+                const qty = item.querySelector('.itemQty').value;
+                const rate = item.querySelector('.itemRate').value;
+
+                if (!name || !qty || !rate) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all fields for each item');
+                return false;
+            }
+
+            return true;
+        }
+
+        async function submitToMake() {
+            if (!validateForm()) {
+                return;
+            }
+
+            const formData = {
+                customerName: document.getElementById('customerName').value.trim(),
+                jobSite: document.getElementById('jobSite').value.trim(),
+                date: document.getElementById('invoiceDate').value,
+                items: Array.from(document.getElementsByClassName('item-row')).map(row => ({
+                    name: row.querySelector('.itemName').value,
+                    quantity: parseFloat(row.querySelector('.itemQty').value),
+                    rate: parseFloat(row.querySelector('.itemRate').value),
+                    subtotal: parseFloat(row.querySelector('.subtotal').textContent.replace('RM ', ''))
+                })),
+                total: parseFloat(document.getElementById('finalTotal').textContent.replace('RM ', ''))
+            };
+
+            try {
+                const response = await fetch('https://hook.eu2.make.com/c2ardw7pnjol5bsbpgeilb3uh3q41qrp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    window.location.href = 'success.html';
+                } else {
+                    throw new Error('Failed to send data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to submit invoice. Please try again.');
+            }
+        }
+
+        // Set today's date as default
+        document.getElementById('invoiceDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
