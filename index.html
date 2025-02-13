@@ -6,96 +6,109 @@
     <title>Installer Invoice</title>
     <style>
         body {
-            font-family:'Courier New', Courier, monospace;
-            max-width: 1000px;
-            margin: 1rem auto;
-            padding: 1rem;
-            background-color: #f4ecd8;
-            line-height: 1.6;
+jhjhh            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            line-height: 1.8;
+            color: #2c3e50;
         }
 
         h1 {
-            color: #6b4845;
-            border-bottom: 3px solid #6b4845;
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: #2c3e50;
+            border-bottom: none;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            text-align: center;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            border-radius: 2px;
         }
 
         .header-info {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         label {
             font-weight: 600;
-            color: #4d4d4d;
+            color: #34495e;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input {
-            padding: 0.8rem;
-            border: 2px solid #d3d3d3;
-            border-radius: 4px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
             font-size: 1rem;
             width: 100%;
             box-sizing: border-box;
             background-color: #fff;
+            transition: all 0.3s ease;
         }
 
         input:focus {
             outline: none;
-            border-color: #d48156;
-            box-shadow: 0 0 0 3px rgba(212, 129, 86, 0.1);
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .items-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             margin: 2rem 0;
-            background: #fff;
-            border-radius: 8px;
+            background: white;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .items-table th {
-            background: #d48156;
-            padding: 1rem;
+            background: #2c3e50;
+            padding: 1.2rem;
             text-align: left;
             font-weight: 600;
             color: #ffffff;
-            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
         }
 
         .items-table td {
-            padding: 1rem;
-            border-top: 1px solid #ecf0f1;
+            padding: 1.2rem;
+            border-top: 1px solid #f1f3f5;
             background-color: #fff;
         }
 
-        .items-table input {
-            margin: 0;
-            padding: 0.5rem;
-        }
-
-        .subtotal {
-            white-space: nowrap;
-            font-weight: 600;
-            color: #6b4845;
-            text-align: right;
-            padding-right: 1rem;
-        }
-
-        .action-buttons {
-            text-align: center;
+        .items-table tr:hover td {
+            background-color: #f8f9fa;
         }
 
         .action-button {
@@ -103,58 +116,62 @@
             border: none;
             cursor: pointer;
             color: #e74c3c;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             padding: 0.5rem;
-            width: auto !important;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            opacity: 0.8;
         }
 
         .action-button:hover {
             transform: scale(1.1);
+            opacity: 1;
         }
 
         .summary-section {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            padding: 1rem;
-            font-size: 1.2rem;
+            padding: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            color: #6b4845;
+            color: #2c3e50;
             align-items: center;
+            background: #f8f9fa;
+            border-radius: 10px;
         }
 
         button {
-            background-color: #d48156;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
-            background-color: #c16e45;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .submit-button {
-            background-color: #6b4845;
-            margin-top: 1rem;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            margin-top: 1.5rem;
             width: 100%;
+            padding: 1.2rem;
         }
 
         /* Mobile Styles */
