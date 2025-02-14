@@ -20,17 +20,17 @@
             <div class="space-y-2">
                 <label class="block text-sm font-semibold text-gray-700">Name:</label>
                 <input type="text" id="customerName" required
-                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="w-full rounded-lg border border-gray-300 p-3 text-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50">
             </div>
             <div class="space-y-2">
                 <label class="block text-sm font-semibold text-gray-700">Job Site:</label>
                 <input type="text" id="jobSite" required
-                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="w-full rounded-lg border border-gray-300 p-3 text-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50">
             </div>
             <div class="space-y-2">
                 <label class="block text-sm font-semibold text-gray-700">Date:</label>
                 <input type="date" id="invoiceDate" required
-                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="w-full rounded-lg border border-gray-300 p-3 text-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50">
             </div>
         </div>
 
@@ -48,13 +48,13 @@
                 <tbody id="itemsTableBody">
                     <tr class="item-row border-b">
                         <td class="p-4">
-                            <input type="text" class="itemName w-full rounded p-2 border-gray-200 text-sm" required placeholder="Item name/Lump Sum">
+                            <input type="text" class="itemName w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" required placeholder="Item name/Lump Sum">
                         </td>
                         <td class="p-4">
-                            <input type="number" class="itemQty w-full rounded p-2 border-gray-200 text-sm" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                            <input type="number" class="itemQty w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
                         </td>
                         <td class="p-4">
-                            <input type="number" class="itemRate w-full rounded p-2 border-gray-200 text-sm" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                            <input type="number" class="itemRate w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
                         </td>
                         <td class="p-4 subtotal text-sm">RM 0.00</td>
                         <td class="p-4">
@@ -89,13 +89,13 @@
             newRow.className = 'item-row border-b';
             newRow.innerHTML = `
                 <td class="p-4">
-                    <input type="text" class="itemName w-full rounded p-2 border-gray-200 text-sm" required placeholder="item name/Lump Sum">
+                    <input type="text" class="itemName w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" required placeholder="item name/Lump Sum">
                 </td>
                 <td class="p-4">
-                    <input type="number" class="itemQty w-full rounded p-2 border-gray-200 text-sm" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                    <input type="number" class="itemQty w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
                 </td>
                 <td class="p-4">
-                    <input type="number" class="itemRate w-full rounded p-2 border-gray-200 text-sm" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                    <input type="number" class="itemRate w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
                 </td>
                 <td class="p-4 subtotal text-sm">RM 0.00</td>
                 <td class="p-4">
