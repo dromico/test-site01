@@ -1,253 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-50">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Installer Invoice</title>
-    <style>
-        body {
-           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            line-height: 1.6;
-            color: #2c3e50;
-        }
-
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            position: relative;
-            margin: 2rem 0;
-            font-size: 2rem;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: #3498db;
-            border-radius: 2px;
-        }
-
-        .header-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .form-group { margin-bottom: 1rem; }
-
-        label {
-            font-weight: 600;
-            color: #34495e;
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        input {
-            padding: 0.8rem;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            width: 100%;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52,152,219,0.1);
-        }
-
-        .items-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 1.5rem 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .items-table th {
-            background: #2c3e50;
-            padding: 1rem;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .items-table td {
-            padding: 1rem;
-            border-top: 1px solid #f1f3f5;
-        }
-
-        .action-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #e74c3c;
-            padding: 0.3rem;
-        }
-
-        .summary-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        button {
-            background: #3498db;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-
-        button:hover { transform: translateY(-1px); }
-
-        .submit-button {
-            background: #2ecc71;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 0.5rem; }
-            
-            .items-table thead { display: none; }
-            
-            .items-table tr {
-                display: block;
-                margin-bottom: 1rem;
-                padding: 0.8rem;
-                background: white;
-                border-radius: 6px;
-            }
-
-            .items-table td {
-                display: block;
-                padding: 0.4rem 0;
-            }
-
-            .items-table td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                display: block;
-                margin-bottom: 0.3rem;
-            }
-
-            .summary-row {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Installer Invoice</h1>
-    
-    <div class="header-info">
-        <div class="form-group">
-            <label>Name:</label>
-            <input type="text" id="customerName" required>
+<body class="min-h-screen p-4 md:p-6">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-8 relative">
+            Installer Invoice
+            <div class="absolute w-20 h-1 bg-blue-500 bottom-0 left-1/2 transform -translate-x-1/2 mt-2"></div>
+        </h1>
+        
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-gray-700">Name:</label>
+                <input type="text" id="customerName" required
+                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-gray-700">Job Site:</label>
+                <input type="text" id="jobSite" required
+                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-gray-700">Date:</label>
+                <input type="date" id="invoiceDate" required
+                    class="w-full rounded-lg border-gray-200 p-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
         </div>
-        <div class="form-group">
-            <label>Job Site:</label>
-            <input type="text" id="jobSite" required>
-        </div>
-        <div class="form-group">
-            <label>Date:</label>
-            <input type="date" id="invoiceDate" required>
-        </div>
-    </div>
 
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th>Items</th>
-                <th>QTY (SF/FR/UNIT)</th>
-                <th>Rate (RM)</th>
-                <th>Subtotal</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="itemsTableBody">
-            <tr class="item-row">
-                <td data-label="Items">
-                    <input type="text" class="itemName" required placeholder="Item name/Lump Sum">
-                </td>
-                <td data-label="QTY">
-                    <input type="number" class="itemQty" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
-                </td>
-                <td data-label="Rate (RM)">
-                    <input type="number" class="itemRate" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
-                </td>
-                <td data-label="Subtotal" class="subtotal">RM 0.00</td>
-                <td data-label="Actions" class="action-buttons">
-                    <button class="action-button delete" onclick="removeItem(this)">🗑️</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <button onclick="addNewItem()">Add Another Item</button>
-
-    <div class="summary-section">
-        <div class="summary-row">
-            <span>Total</span>
-            <span id="finalTotal">RM 0.00</span>
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+            <table class="w-full">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="p-4 text-left text-sm">Items</th>
+                        <th class="p-4 text-left text-sm">QTY (SF/FR/UNIT)</th>
+                        <th class="p-4 text-left text-sm">Rate (RM)</th>
+                        <th class="p-4 text-left text-sm">Subtotal</th>
+                        <th class="p-4 text-left text-sm">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="itemsTableBody">
+                    <tr class="item-row border-b">
+                        <td class="p-4">
+                            <input type="text" class="itemName w-full rounded p-2 border-gray-200 text-sm" required placeholder="Item name/Lump Sum">
+                        </td>
+                        <td class="p-4">
+                            <input type="number" class="itemQty w-full rounded p-2 border-gray-200 text-sm" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                        </td>
+                        <td class="p-4">
+                            <input type="number" class="itemRate w-full rounded p-2 border-gray-200 text-sm" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                        </td>
+                        <td class="p-4 subtotal text-sm">RM 0.00</td>
+                        <td class="p-4">
+                            <button class="text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">🗑️</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <button class="submit-button" onclick="submitToMake()">Submit Invoice</button>
+
+        <button onclick="addNewItem()" 
+            class="mb-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+            Add Another Item
+        </button>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg mb-4">
+                <span class="font-semibold text-gray-700">Total</span>
+                <span id="finalTotal" class="text-xl font-bold text-gray-900">RM 0.00</span>
+            </div>
+            <button onclick="submitToMake()" 
+                class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-medium">
+                Submit Invoice
+            </button>
+        </div>
     </div>
 
     <script>
         function addNewItem() {
             const tbody = document.getElementById('itemsTableBody');
             const newRow = document.createElement('tr');
-            newRow.className = 'item-row';
+            newRow.className = 'item-row border-b';
             newRow.innerHTML = `
-                <td data-label="Items">
-                    <input type="text" class="itemName" required placeholder="item name/Lump Sum">
+                <td class="p-4">
+                    <input type="text" class="itemName w-full rounded p-2 border-gray-200 text-sm" required placeholder="item name/Lump Sum">
                 </td>
-                <td data-label="QTY">
-                    <input type="number" class="itemQty" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                <td class="p-4">
+                    <input type="number" class="itemQty w-full rounded p-2 border-gray-200 text-sm" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
                 </td>
-                <td data-label="Rate (RM)">
-                    <input type="number" class="itemRate" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                <td class="p-4">
+                    <input type="number" class="itemRate w-full rounded p-2 border-gray-200 text-sm" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
                 </td>
-                <td data-label="Subtotal" class="subtotal">RM 0.00</td>
-                <td data-label="Actions" class="action-buttons">
-                    <button class="action-button delete" onclick="removeItem(this)">🗑️</button>
+                <td class="p-4 subtotal text-sm">RM 0.00</td>
+                <td class="p-4">
+                    <button class="text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">🗑️</button>
                 </td>
             `;
             tbody.appendChild(newRow);
