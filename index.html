@@ -6,17 +6,16 @@
     <title>Installer Invoice</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen p-4 md:p-6">
+<body class="min-h-screen p-2 md:p-6">
     <div class="max-w-4xl mx-auto">
-        <div class="flex justify-center items-center mb-8">
-            <img src="path/LOGO.png" alt="Durafloor Logo" class="h-16 mr-4">
-            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 text-center relative">
+        <div class="flex justify-center items-center mb-4 md:mb-8">
+            <img src="path/LOGO.png" alt="Durafloor Logo" class="h-12 md:h-16 mr-2 md:mr-4">
+            <h1 class="text-xl md:text-3xl font-bold text-gray-800 text-center relative">
                 Installer Invoice
-                
             </h1>
         </div>
         
-        <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 p-4 md:p-6 mb-4 md:mb-6 grid grid-cols-1 gap-4">
             <div class="space-y-2">
                 <label class="block text-sm font-semibold text-gray-700">Name:</label>
                 <input type="text" id="customerName" required
@@ -34,8 +33,8 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mb-6">
-            <table class="w-full">
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mb-4 md:mb-6">
+            <table class="w-full hidden md:table">
                 <thead class="bg-gray-800 text-white">
                     <tr>
                         <th class="p-4 text-left text-sm">Items</th>
@@ -63,14 +62,43 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Mobile view of items -->
+            <div class="md:hidden" id="mobileItemsContainer">
+                <div class="bg-gray-800 text-white p-4 text-sm font-medium">Items List</div>
+                <div id="mobileItemsBody">
+                    <div class="item-row border-b p-4">
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Item</label>
+                                <input type="text" class="itemName w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" required placeholder="Item name/Lump Sum">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">Quantity</label>
+                                    <input type="number" class="itemQty w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">Rate (RM)</label>
+                                    <input type="number" class="itemRate w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="subtotal text-base font-medium">RM 0.00</span>
+                                <button class="text-red-500 hover:text-red-700 transition-colors p-2" onclick="removeItem(this)">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <button onclick="addNewItem()" 
-            class="mb-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm shadow-sm border border-blue-600">
+            class="mb-4 md:mb-6 w-full md:w-auto bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors text-base shadow-sm border border-blue-600">
             Add Another Item
         </button>
 
-        <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 p-4 md:p-6">
             <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg mb-4">
                 <span class="font-semibold text-gray-700">Total</span>
                 <span id="finalTotal" class="text-xl font-bold text-gray-900">RM 0.00</span>
@@ -84,27 +112,58 @@
 
     <script>
         function addNewItem() {
-            const tbody = document.getElementById('itemsTableBody');
-            const newRow = document.createElement('tr');
-            newRow.className = 'item-row border-b';
-            newRow.innerHTML = `
-                <td class="p-4">
-                    <input type="text" class="itemName w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" required placeholder="item name/Lump Sum">
-                </td>
-                <td class="p-4">
-                    <input type="number" class="itemQty w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
-                </td>
-                <td class="p-4">
-                    <input type="number" class="itemRate w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
-                </td>
-                <td class="p-4 subtotal text-sm">RM 0.00</td>
-                <td class="p-4">
-                    <button class="text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">🗑️</button>
-                </td>
-            `;
-            tbody.appendChild(newRow);
-            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            newRow.querySelector('.itemName').focus();
+            if (window.innerWidth < 768) {
+                const container = document.getElementById('mobileItemsBody');
+                const newItem = document.createElement('div');
+                newItem.className = 'item-row border-b p-4';
+                newItem.innerHTML = `
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Item</label>
+                            <input type="text" class="itemName w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" required placeholder="Item name/Lump Sum">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Quantity</label>
+                                <input type="number" class="itemQty w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Rate (RM)</label>
+                                <input type="number" class="itemRate w-full rounded-lg p-3 border border-gray-300 text-base bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="subtotal text-base font-medium">RM 0.00</span>
+                            <button class="text-red-500 hover:text-red-700 transition-colors p-2" onclick="removeItem(this)">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(newItem);
+                newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                newItem.querySelector('.itemName').focus();
+            } else {
+                const tbody = document.getElementById('itemsTableBody');
+                const newRow = document.createElement('tr');
+                newRow.className = 'item-row border-b';
+                newRow.innerHTML = `
+                    <td class="p-4">
+                        <input type="text" class="itemName w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" required placeholder="item name/Lump Sum">
+                    </td>
+                    <td class="p-4">
+                        <input type="number" class="itemQty w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="1" required oninput="calculateSubtotal(this)" placeholder="0">
+                    </td>
+                    <td class="p-4">
+                        <input type="number" class="itemRate w-full rounded p-2 border border-gray-300 text-sm bg-gray-50" step="0.01" required oninput="calculateSubtotal(this)" placeholder="0.00">
+                    </td>
+                    <td class="p-4 subtotal text-sm">RM 0.00</td>
+                    <td class="p-4">
+                        <button class="text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">🗑️</button>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+                newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                newRow.querySelector('.itemName').focus();
+            }
         }
 
         function removeItem(button) {
